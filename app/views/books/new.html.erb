@@ -1,0 +1,106 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="container">
+  <nav class="nav navbar-nav navbar-left">
+    <span>Bookers</span>
+  </nav>
+  <nav>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+       <%=link_to "Home", user_path(@user), class:"glyphicon glyphicon-home home" %>
+     </li>
+      <li>
+        <a class="glyphicon glyphicon-user users" href="/users">
+        Users</a>
+      </li>
+      <li>
+        <a class="glyphicon glyphicon-book books" href="/books">Books</a>
+      </li>
+      <li>
+        <a class="glyphicon glyphicon-log-out logout" rel="nofollow" data-method="delete" href="/users/sign_out">logout</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+</header>
+
+<div class="row">
+  <div class="col-xs-3">
+    <h2>User info</h2>
+    <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "no_image.jpg" %>
+    <table class="table">
+    <tbody>
+      <p>name</p>
+      <p><span><%= @user.name %></span>
+      </p>
+      <p>Introduction</p>
+      <p><%= @user.introduction %></p>
+        <p><%= link_to "", edit_user_path(@user), class:"col-xs-12 btn btn-default glyphicon glyphicon-wrench" %></p>
+</div>
+
+<div class="body">
+  <div class="container">
+    <p id="notice"></p>
+    <div class="row">
+      <div class="col-xs-3">
+
+
+        <h2>New book</h2>
+<% if @book.errors.any? %>
+  <div id="error_explanation">
+    <h2>2 errors prohibited this book from being saved:</h2>
+    <ul>
+      <% @book.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<%= form_for(@book) do |f| %>
+
+  <h4>title</h4>
+  <%= f.text_field :title %>
+
+  <h4>Opinion</h4>
+  <%= f.text_area :body %>
+
+  <%= f.submit 'Create Book' %>
+
+<% end %>
+
+  <p id="notice"></p>
+    <div class="col-xs-9">
+    <% if flash[:notice] %>
+    <p id="notice"><%= flash[:notice] %></p>
+  <% end %>
+  <p id="notice"></p>
+  <h1>Books</h1>
+  <table>
+    <thead>
+       <tr>
+         <th>Title</th>
+         <th>Opinion</th>
+         <th colspan="3"></th>
+       </tr>
+    </thead>
+    <tbody>
+    <% @books.each do |book| %>
+       <tr>
+       <td>
+        <%= attachment_image_tag @user, :profile_image, :fill, 60, 60, format: 'jpeg', fallback: "no_image.jpg" %>
+       </td>
+       <td>
+        <a href ="/book/#{book.id}(@books)">
+        <%= book.title %>
+      </a>
+       </td>
+       <td>
+        <%= book.body %>
+       </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+  </div>
+</div>
+</div>
+</div>
